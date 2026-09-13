@@ -30,3 +30,7 @@ Por qué debe ser compartido: porque varios componentes (Libros, Recepciones, It
 Error de validación: la condición length < 10 && length < 13 nunca aplicaba correctamente la regla de negocio (ISBN de 10 o 13 caracteres); con && la condición era casi imposible de activar bien.
 Corrección: se cambió a len !== 10 && len !== 13, que rechaza cualquier ISBN que no tenga exactamente 10 o 13 caracteres.
 Problema con el año: el formulario guardaba el dato como anio_publicacion, pero el resto del sistema (estado inicial y listado) usaba anio, generando inconsistencia. Se unificó todo al nombre anio.
+
+## Gestión de Recepciones 
+Error encontrado: en la función guardar(), faltaba un return después del alert('Seleccione proveedor'). Como resultado, aunque se mostraba la alerta, el código seguía ejecutándose y la recepción se registraba igual sin proveedor.
+Corrección: se agregó return justo después del alert, cortando la ejecución cuando no hay proveedor seleccionado.
