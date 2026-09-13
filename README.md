@@ -25,3 +25,8 @@ Causa: useRecepcionStore() retorna {} en vez de { state }
 Problema encontrado: la función useRecepcionStore() retornaba un objeto vacío en lugar de exponer el state, por lo que ningún componente podía acceder a los datos. Además, el campo id_reception estaba mal escrito (no coincidía con id_recepcion usado en otros componentes) y cantidad se guardaba como texto en vez de número.
 Corrección: se retornó { state } desde el store, se corrigió el nombre del campo a id_recepcion y se cambió cantidad a tipo numérico.
 Por qué debe ser compartido: porque varios componentes (Libros, Recepciones, ItemsRecepcion) necesitan leer y modificar la misma información (por ejemplo, la lista de proveedores se usa tanto en Recepciones como potencialmente en Proveedores), y sin un estado central cada uno tendría su propia copia desincronizada.
+
+## Gestión de Libros
+Error de validación: la condición length < 10 && length < 13 nunca aplicaba correctamente la regla de negocio (ISBN de 10 o 13 caracteres); con && la condición era casi imposible de activar bien.
+Corrección: se cambió a len !== 10 && len !== 13, que rechaza cualquier ISBN que no tenga exactamente 10 o 13 caracteres.
+Problema con el año: el formulario guardaba el dato como anio_publicacion, pero el resto del sistema (estado inicial y listado) usaba anio, generando inconsistencia. Se unificó todo al nombre anio.
