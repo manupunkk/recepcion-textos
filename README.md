@@ -34,3 +34,8 @@ Problema con el año: el formulario guardaba el dato como anio_publicacion, pero
 ## Gestión de Recepciones 
 Error encontrado: en la función guardar(), faltaba un return después del alert('Seleccione proveedor'). Como resultado, aunque se mostraba la alerta, el código seguía ejecutándose y la recepción se registraba igual sin proveedor.
 Corrección: se agregó return justo después del alert, cortando la ejecución cuando no hay proveedor seleccionado.
+
+## Detalle de recepción
+Problema con el identificador de la recepción: el estado inicial (useRecepcionStore.js) guardaba el campo como id_reception (mal escrito), mientras que el resto del proyecto usaba id_recepcion. Esto, sumado a que el filtro en ItemsRecepcion.vue comparaba it.id_reception en vez de it.id_recepcion, hacía que nunca se encontraran coincidencias.
+Cómo se solucionó el filtrado: se unificó el nombre del campo a id_recepcion tanto en el estado inicial como en el filtro (computed), quedando it.id_recepcion === props.idRecepcion.
+Cómo se logró agregar un ítem correctamente: la función agregar() hace state.items.push({...}) incluyendo id_recepcion: props.idRecepcion, y la cantidad se convierte explícitamente con Number() para asegurar que sea un valor numérico y no texto.

@@ -12,14 +12,14 @@ const { state } = useRecepcionStore()
 const form = ref({ id_libro: '', cantidad: 0, estado: 'correcto', observacion: '' })
 
 
-const items = computed(() => (state?.items || []).filter(it => it.id_reception === props.idRecepcion)) // BUG
+const items = computed(() => (state?.items || []).filter(it => it.id_recepcion === props.idRecepcion)) // BUG
 
 function agregar(){
   state.items.push({
     id: Date.now(),
     id_recepcion: props.idRecepcion,      
     id_libro: Number(form.value.id_libro),
-    cantidad: form.value.cantidad,          
+    cantidad: Number(form.value.cantidad),          
     estado: form.value.estado,
     observacion: form.value.observacion
   })
@@ -36,7 +36,7 @@ function agregar(){
         <option value="">— Libro —</option>
         <option v-for="l in state?.libros || []" :key="l.id" :value="l.id">{{ l.titulo }}</option>
       </select>
-      <input type="number" v-model="form.cantidad" min="1" placeholder="Cantidad" />
+      <input type="number" v-model.number="form.cantidad" min="1" placeholder="Cantidad" />
       <select v-model="form.estado">
         <option value="correcto">Correcto</option>
         <option value="dañado">Dañado</option>
