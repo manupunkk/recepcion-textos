@@ -39,3 +39,8 @@ Corrección: se agregó return justo después del alert, cortando la ejecución 
 Problema con el identificador de la recepción: el estado inicial (useRecepcionStore.js) guardaba el campo como id_reception (mal escrito), mientras que el resto del proyecto usaba id_recepcion. Esto, sumado a que el filtro en ItemsRecepcion.vue comparaba it.id_reception en vez de it.id_recepcion, hacía que nunca se encontraran coincidencias.
 Cómo se solucionó el filtrado: se unificó el nombre del campo a id_recepcion tanto en el estado inicial como en el filtro (computed), quedando it.id_recepcion === props.idRecepcion.
 Cómo se logró agregar un ítem correctamente: la función agregar() hace state.items.push({...}) incluyendo id_recepcion: props.idRecepcion, y la cantidad se convierte explícitamente con Number() para asegurar que sea un valor numérico y no texto.
+
+## Cálculos de recepción
+Cómo se obtuvo el total: se creó la función totalLibros(idRecepcion), que filtra state.items por id_recepcion y suma las cantidades con reduce.
+Cómo se determinaron los elementos con problemas: se creó porcentajeProblemas(idRecepcion), que cuenta los ítems con estado 'dañado' o 'mixto' sobre el total de ítems de esa recepción, y calcula el porcentaje. Si la recepción no tiene ítems, retorna 0 en vez de dividir por cero (evitando el NaN).
+Información utilizada: los datos de state.items, en especial los campos id_recepcion, cantidad y estado.
